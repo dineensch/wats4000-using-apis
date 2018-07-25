@@ -1,17 +1,17 @@
 <template>
-  <div class="rhymesaurus">
+  <div class="adjective-rhyme">
     <p>
       <router-link v-bind:to="{ name: 'AdjectiveFind' }">Adjective Finder</router-link>
       &bull;
-      <router-link v-bind:to="{ name: 'AdjectiveRhyme' }">Adjective Rhymes</router-link>
+      <router-link v-bind:to="{ name: 'AdjectiveRhyme' }" class="active">Adjective Rhymes</router-link>
       &bull;
-      <router-link v-bind:to="{ name: 'Rhymesaurus' }" class="active">Rhyme Word Relations</router-link>
+      <router-link v-bind:to="{ name: 'Rhymesaurus' }">Rhyme Word Relations</router-link>
       &bull;
       <router-link v-bind:to="{ name: 'Swapi' }">Something New?</router-link>
-    </p>  
+    </p>           
     <!-- Use a submit event handler to allow the findWords method to handle this form submission. -->
     <form v-on:submit.prevent="findWords">
-      <p>Find rhymes for <input type="text" v-model="rhyme"> related to <input type="text" v-model="phrase"> <button type="submit">Search</button></p>
+      <p>Find adjectives for <input type="text" v-model="phrase"> that rhyme with <input type="text" v-model="rhyme"> <button type="submit">Search</button></p>
     </form> 
 
     <!-- A v-if conditional to make this results list show only if there are results and if the length is greater than 0. -->
@@ -43,7 +43,7 @@
 import axios from 'axios';
 
 export default {
-  name: 'Rhymesaurus',
+  name: 'AdjectiveRhyme',
   data () {
     return {
       results: null,
@@ -60,9 +60,8 @@ export default {
         // Create the params object
         params: {
           // Set the `ml` parameter equal to `this.phrase`
-          ml: this.phrase,
-          // Set the `rel_rhy` parameter equal to `this.rhyme`
-          rel_rhy: this.rhyme
+          rel_jjb: this.phrase, // the given noun
+          rel_rhy: this.rhyme // the word the output adjectives will rhyme with
         }
       })
       // Create a `then` clause
@@ -82,10 +81,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.rhymesaurus {
+.adjective-rhyme {
   font-size: 1.4rem;
-  color: #2c3e50;
-  padding: 60px 0;  
+  padding: 60px 0;
 }
 
 input[type="text"]{
@@ -150,5 +148,4 @@ a:hover {
 .active {
   font-weight: 600;
 } 
-
 </style>

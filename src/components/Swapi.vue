@@ -1,41 +1,44 @@
 <template>
-  <div class="rhymesaurus">
+  <div class="swapi">
     <p>
       <router-link v-bind:to="{ name: 'AdjectiveFind' }">Adjective Finder</router-link>
       &bull;
       <router-link v-bind:to="{ name: 'AdjectiveRhyme' }">Adjective Rhymes</router-link>
       &bull;
-      <router-link v-bind:to="{ name: 'Rhymesaurus' }" class="active">Rhyme Word Relations</router-link>
+      <router-link v-bind:to="{ name: 'Rhymesaurus' }">Rhyme Word Relations</router-link>
       &bull;
-      <router-link v-bind:to="{ name: 'Swapi' }">Something New?</router-link>
-    </p>  
-    <!-- Use a submit event handler to allow the findWords method to handle this form submission. -->
-    <form v-on:submit.prevent="findWords">
-      <p>Find rhymes for <input type="text" v-model="rhyme"> related to <input type="text" v-model="phrase"> <button type="submit">Search</button></p>
+      <router-link v-bind:to="{ name: 'Swapi' }" class="active">Something New!</router-link>
+    </p>
+
+    <div class="filters">
+    <div class="results">
+      Selected: <strong>{{ selectedMovie }} </strong>
+    </div>
+    </div>
+
+
+    <!-- <form v-on:submit.prevent="findWords">
+      <p>Show me <input type="text" v-model="rhyme"> related to <input type="text" v-model="phrase"> <button type="submit">Search</button></p>
     </form> 
 
-    <!-- A v-if conditional to make this results list show only if there are results and if the length is greater than 0. -->
     <ul v-if="results && results.length > 0" class="results">
-      <!-- A v-for loop to the li tag to loop through the items in the results. -->
       <li v-for="item in results" class="item">
         <p><strong>{{ item.word }}</strong></p>
         <p>{{ item.score }}</p>
       </li>
     </ul>
 
-    <!-- A `v-else-if` conditional to make this message only show if there are no results returned (but we have actually attempted a request). -->
     <div v-else-if="results && results.length === 0" class="no-results">
       <h2>No Words Found!</h2>
       <p>Please adjust your search to find more words.</p>
     </div>
 
-    <!-- A v-if conditional to make this errors list show only if there are errors and if the length is greater than 0. -->
     <ul v-if="errors.length > 0" class="errors">
-      <!-- A v-for loop to the LI tag to loop through the errors. -->
       <li v-for="error in errors">
         {{ error.message }} 
       </li>
-    </ul>
+    </ul> -->
+
   </div>
 </template>
 
@@ -43,20 +46,19 @@
 import axios from 'axios';
 
 export default {
-  name: 'Rhymesaurus',
+  name: 'Swapi',
   data () {
     return {
       results: null,
       errors: [],
-      phrase: '',
-      rhyme: ''
+      selectedMovie: ''
     }
   },
   // Create the findWords method.
   methods: {
     findWords: function() {
-      // Create an axios.get statement that requests from https://api.datamuse.com/words
-      axios.get('https://api.datamuse.com/words', {
+      // Create an axios.get statement that requests from https://swapi.co/api/
+      axios.get('https://swapi.co/api/', {
         // Create the params object
         params: {
           // Set the `ml` parameter equal to `this.phrase`
@@ -82,29 +84,30 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.rhymesaurus {
+.swapi {
   font-size: 1.4rem;
-  color: #2c3e50;
-  padding: 60px 0;  
+  background-color: #333;
+  color: #fff;
+  padding: 60px 0;
 }
 
 input[type="text"]{
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #fff;
   width: 300px;
   font-size: 1.4rem;
-  color: #2c3e50;
+  color: yellow;
   font-weight: 300;
-  background: rgba(0,0,0,0.02);
+  background: rgba(255, 255, 255, 0.2);
   padding: 0.5rem;
 }
 button{
-  background: #333;
+  background: #fff;
   padding: 0.5rem;
   font-weight: 300;
-  color: #fff;
+  color: #333;
   border: none;
   cursor: pointer;
   font-size: 1.4rem;
@@ -121,11 +124,11 @@ ul.results {
 .results li {
   display: inline-block;
   margin: 10px;
-  border: solid 1px #333;
+  border: solid 1px #fff;
   padding: 0.5rem;
   width: 200px;
   min-height: 100px;
-  color: #fff;
+  color: rgb(80, 228, 80);
   background: rgba(0,0,0,0.7);
 }
 ul.errors {
@@ -139,16 +142,18 @@ ul.errors {
 }
 
 a {
-  color: #42b983;
+  color: yellow;
   text-decoration: none;
 }
 
 a:hover {
-  border-bottom: 1px solid #42b983;
+  color: yellow;
+  border-top: 1px solid yellow;
+  border-bottom: 1px solid yellow;
 }
-
 .active {
-  font-weight: 600;
-} 
-
+  color:rgb(106, 240, 233);
+  border-top: 1px solid rgb(106, 240, 233);
+  border-bottom: 1px solid rgb(106, 240, 233);
+}
 </style>
